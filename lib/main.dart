@@ -1,4 +1,6 @@
-import 'package:e_commerce_app/Auth/register_screen.dart';
+import 'package:e_commerce_app/Auth/Login/login_screen.dart';
+import 'package:e_commerce_app/Auth/Register/register_screen.dart';
+import 'package:e_commerce_app/Home_Screen/home_screen.dart';
 import 'package:e_commerce_app/Splachscreen/splach_screen.dart';
 import 'package:e_commerce_app/Theme/my_Theme.dart';
 import 'package:flutter/material.dart';
@@ -22,7 +24,9 @@ theme: MyTheme.lightTheme,
           initialRoute: SplachScreen.routeName,
           routes: {
   SplachScreen.routeName:(context) => SplachScreen(),
-            RegisterScreen.routeName:(context) => RegisterScreen()
+            RegisterScreen.routeName:(context) => RegisterScreen(),
+         LoginScreen.routeName:(context) => LoginScreen(),
+            HomeScreen.routeName:(context) => HomeScreen(),
           },
 
         );
