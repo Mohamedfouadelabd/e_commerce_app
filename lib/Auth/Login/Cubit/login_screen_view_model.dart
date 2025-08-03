@@ -10,6 +10,8 @@ class LoginScreenViewModel  extends Cubit<LoginState> {
   var formkey=GlobalKey<FormState>();
   var emailcontroller = TextEditingController();
   var passwordcontroller = TextEditingController();
+ var mobilecontroller = TextEditingController();
+ var namecontroller = TextEditingController();
   LoginScreenViewModel(this.useCase) :super(LoginInitialState());
 
   void login() async {

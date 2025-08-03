@@ -53,7 +53,7 @@ class ApiManger {
     }
   }
 
- Future<LoginResponse> Login(String email, String password) async {
+  Future<LoginResponse> Login(String email, String password) async {
     final connectivityResult = await Connectivity().checkConnectivity();
     if (connectivityResult == ConnectivityResult.mobile ||
         connectivityResult == ConnectivityResult.wifi) {
@@ -71,18 +71,13 @@ class ApiManger {
 
       var loginResponse = LoginResponse.fromJson(json.decode(response.body));
 
-    if(response.statusCode>= 200 && response.statusCode < 300){
-      return loginResponse;
-    }else {
-      return loginResponse;
-    }
-    }else {
+      if (response.statusCode >= 200 && response.statusCode < 300) {
+        return loginResponse;
+      } else {
+        return loginResponse;
+      }
+    } else {
       return LoginResponse(message: 'Please check internet connection');
     }
-
-
-
   }
-
-
 }

@@ -5,7 +5,11 @@ import 'package:e_commerce_app/Auth/Register/register_screen.dart';
 import 'package:e_commerce_app/dailog%20_utils/Dailog_Utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../Home_Screen/home_screen.dart';
+import 'package:provider/provider.dart';
+
+import '../../Main_screen/Main_screen.dart';
+import '../../Personal/provider/user_provider.dart';
+import '../../Personal/user_model.dart';
 import '../../Theme/my_Theme.dart';
 import '../CustomTextField/custom_text_field.dart';
 import '../CustomTextField/cutom_text.dart';
@@ -34,9 +38,18 @@ class LoginScreen extends StatelessWidget {
             titel: 'success',
             posActionName: 'OK',
             posAc: () {
+              var userProvider = Provider.of<UserProvider>(context, listen: false);
+              userProvider.setUser(
+                UserModel(
+                  name: viewModel.emailcontroller.text,
+                  email: viewModel.emailcontroller.text,
+                  mobileNumber: viewModel.passwordcontroller.text,
+                  password: viewModel.passwordcontroller.text,
+                ),
+              );
               Navigator.pushReplacement(
                 context,
-                MaterialPageRoute(builder: (_) => HomeScreen()),
+                MaterialPageRoute(builder: (_) => MainScreen()),
               );
             },
           );
