@@ -33,8 +33,12 @@ appBarTheme: AppBarTheme(
   color: Colors.transparent,
   elevation: 0,
 
-)
+),
+bottomNavigationBarTheme: BottomNavigationBarThemeData(
+  selectedItemColor: MyTheme.Black,
+  unselectedItemColor:MyTheme.White ,
 
+)
 );
 
 

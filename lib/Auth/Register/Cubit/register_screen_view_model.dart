@@ -15,6 +15,7 @@ class RegisterScreenViewModel extends Cubit<RegisterState> {
   var emailcontroller = TextEditingController();
   var mobilecontroller = TextEditingController();
   var formkey = GlobalKey<FormState>();
+
   void register() async {
     if (formkey.currentState!.validate() == true) {
       emit(RegisterLoadingState(loadingMassage: 'Loading..'));

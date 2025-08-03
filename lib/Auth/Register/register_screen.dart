@@ -5,19 +5,21 @@ import 'package:e_commerce_app/Auth/Register/Cubit/register_screen_view_model.da
 import 'package:e_commerce_app/Auth/Register/Cubit/statae.dart';
 import 'package:e_commerce_app/Auth/Register/domain/usecase/register_usecase.dart';
 
-
 import 'package:e_commerce_app/Theme/my_Theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:provider/provider.dart';
 
-import '../../Home_Screen/home_screen.dart';
+import '../../Main_screen/Main_screen.dart';
+import '../../Personal/provider/user_provider.dart';
+import '../../Personal/user_model.dart';
 import '../../dailog _utils/Dailog_Utils.dart';
 
 class RegisterScreen extends StatelessWidget {
   static const String routeName = 'register';
 
-
-  RegisterScreenViewModel viewModel = RegisterScreenViewModel(injectRegisterUseCase());
+  RegisterScreenViewModel viewModel =
+      RegisterScreenViewModel(injectRegisterUseCase());
   @override
   Widget build(BuildContext context) {
     return BlocListener<RegisterScreenViewModel, RegisterState>(
@@ -27,8 +29,9 @@ class RegisterScreen extends StatelessWidget {
           DailogUtils.showLoading(context, state.loadingMassage ?? "waiting");
         } else if (state is RegisterErrorState) {
           DailogUtils.hideLoading(context);
-          DailogUtils.showMassage(context, state.errorMassage ?? "error",posActionName: 'ok');
-        }else if (state is RegisterSuccessState) {
+          DailogUtils.showMassage(context, state.errorMassage ?? "error",
+              posActionName: 'ok');
+        } else if (state is RegisterSuccessState) {
           DailogUtils.hideLoading(context);
           DailogUtils.showMassage(
             context,
@@ -36,14 +39,22 @@ class RegisterScreen extends StatelessWidget {
             titel: 'success',
             posActionName: 'OK',
             posAc: () {
+             var userProvider = Provider.of<UserProvider>(context, listen: false);
+              userProvider.setUser(
+                UserModel(
+                  name: viewModel.namecontroller.text,
+                  email: viewModel.emailcontroller.text,
+                 mobileNumber: viewModel.mobilecontroller.text,
+              password: viewModel.passwordcontroller.text,
+                ),
+              );
               Navigator.pushReplacement(
                 context,
-                MaterialPageRoute(builder: (_) => HomeScreen()),
+                MaterialPageRoute(builder: (_) => MainScreen()),
               );
             },
           );
         }
-
       },
       child: Scaffold(
         backgroundColor: MyTheme.primary,
@@ -66,7 +77,7 @@ class RegisterScreen extends StatelessWidget {
                       CustomTextFormField(
                         lable: 'enter your full name',
                         keyboardType: TextInputType.name,
-                        controller:viewModel. namecontroller,
+                        controller: viewModel.namecontroller,
                         validator: (text) {
                           if (text == null || text.trim().isEmpty) {
                             return 'Please Enter UserName';
@@ -77,7 +88,7 @@ class RegisterScreen extends StatelessWidget {
                       CustomText(name: 'E-mail address'),
                       CustomTextFormField(
                         lable: 'enter your email address',
-                        controller:viewModel. emailcontroller,
+                        controller: viewModel.emailcontroller,
                         keyboardType: TextInputType.emailAddress,
                         validator: (text) {
                           if (text == null || text.trim().isEmpty) {
@@ -97,7 +108,7 @@ class RegisterScreen extends StatelessWidget {
                       CustomTextFormField(
                         lable: 'enter your password',
                         keyboardType: TextInputType.number,
-                        controller:viewModel. passwordcontroller,
+                        controller: viewModel.passwordcontroller,
                         isPassword: true,
                         validator: (text) {
                           if (text == null || text.trim().isEmpty) {
@@ -113,7 +124,7 @@ class RegisterScreen extends StatelessWidget {
                       CustomTextFormField(
                         lable: 'enter your conformation password',
                         keyboardType: TextInputType.number,
-                        controller:viewModel. conformationpasswordcontroller,
+                        controller: viewModel.conformationpasswordcontroller,
                         isPassword: true,
                         validator: (text) {
                           if (text == null || text.trim().isEmpty) {
@@ -153,7 +164,7 @@ class RegisterScreen extends StatelessWidget {
                         backgroundColor:
                             MaterialStatePropertyAll(MyTheme.White)),
                     onPressed: () {
-                     viewModel.register();
+                      viewModel.register();
                     },
                     child: Text('Sign',
                         style: Theme.of(context).textTheme.titleSmall)),
@@ -169,6 +180,4 @@ class RegisterScreen extends StatelessWidget {
       ),
     );
   }
-
-
 }
