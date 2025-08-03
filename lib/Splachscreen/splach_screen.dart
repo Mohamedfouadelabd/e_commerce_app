@@ -2,7 +2,7 @@
 
 import 'dart:async';
 
-import 'package:e_commerce_app/Auth/register_screen.dart';
+import 'package:e_commerce_app/Auth/Register/register_screen.dart';
 import 'package:flutter/material.dart';
 
 class SplachScreen extends StatelessWidget {

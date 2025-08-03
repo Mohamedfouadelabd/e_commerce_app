@@ -1,11 +1,19 @@
-import 'package:e_commerce_app/Auth/register_screen.dart';
+import 'package:e_commerce_app/Auth/Login/login_screen.dart';
+import 'package:e_commerce_app/Auth/Register/register_screen.dart';
+
+import 'package:e_commerce_app/Main_screen/Main_screen.dart';
+import 'package:e_commerce_app/Personal/provider/user_provider.dart';
 import 'package:e_commerce_app/Splachscreen/splach_screen.dart';
 import 'package:e_commerce_app/Theme/my_Theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp( MyApp());
+  runApp( ChangeNotifierProvider(
+      create: (context) => UserProvider(),
+
+      child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -18,11 +26,14 @@ class MyApp extends StatelessWidget {
       splitScreenMode: true,
       builder: (context, child) {
         return MaterialApp(
-theme: MyTheme.lightTheme,
+debugShowCheckedModeBanner: false,
+          theme: MyTheme.lightTheme,
           initialRoute: SplachScreen.routeName,
           routes: {
   SplachScreen.routeName:(context) => SplachScreen(),
-            RegisterScreen.routeName:(context) => RegisterScreen()
+            RegisterScreen.routeName:(context) => RegisterScreen(),
+         LoginScreen.routeName:(context) => LoginScreen(),
+            MainScreen.routeName:(context) => MainScreen(),
           },
 
         );

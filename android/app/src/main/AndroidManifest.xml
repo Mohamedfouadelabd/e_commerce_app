@@ -1,7 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <!-- Required to fetch data from the internet. -->
-    <key>com.apple.security.network.client</key>
-    <true/>
+    <uses-permission android:name="android.permission.INTERNET" />
     <application
         android:label="e_commerce_app"
         android:name="${applicationName}"
