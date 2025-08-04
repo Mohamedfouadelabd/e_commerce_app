@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
         return MaterialApp(
 debugShowCheckedModeBanner: false,
           theme: MyTheme.lightTheme,
-          initialRoute: SplachScreen.routeName,
+          initialRoute: MainScreen.routeName,
           routes: {
   SplachScreen.routeName:(context) => SplachScreen(),
             RegisterScreen.routeName:(context) => RegisterScreen(),

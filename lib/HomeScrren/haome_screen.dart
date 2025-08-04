@@ -1,10 +1,19 @@
+import 'package:e_commerce_app/HomeScrren/Brands/brands_view.dart';
+import 'package:e_commerce_app/HomeScrren/Cubit/home_screen_view.dart';
+
+import 'package:e_commerce_app/Theme/my_Theme.dart';
 import 'package:flutter/material.dart';
-
-import '../Search/search_field.dart';
 import 'BasicElement/basic_element.dart';
-import 'CategoryFragment/category_fragment.dart';
+import 'Search/search_field.dart';
 
-class HomeScreen extends StatelessWidget {
+
+class HomeScreen extends StatefulWidget {
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
   final searchcontroller = TextEditingController();
 
   @override
@@ -13,6 +22,7 @@ class HomeScreen extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SizedBox(height: MediaQuery.of(context).size.height * 0.08),
+
         Row(
           children: [
             Expanded(
@@ -29,13 +39,31 @@ class HomeScreen extends StatelessWidget {
             ),
           ],
         ),
+
+
+
+
         BasicElement(),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Text(
-            'Categories',
-            style: Theme.of(context).textTheme.titleSmall,
-          ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                'Categories',
+                style: Theme.of(context).textTheme.titleSmall,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                'view all',
+                style: Theme.of(context).textTheme.titleSmall,
+              ),
+            ),
+
+          ],
         ),
         // Expanded wrapping only one scrollable ListView
         Expanded(
@@ -43,20 +71,37 @@ class HomeScreen extends StatelessWidget {
             children: [
               SizedBox(
                 height: MediaQuery.of(context).size.height * 0.2,
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: 10,
-                  itemBuilder: (context, index) => CategoryFragment(),
-                ),
+                child: HomeScreenView(),
               ),
               SizedBox(height: 8),
               SizedBox(
-                height: MediaQuery.of(context).size.height * 0.3,
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: 10,
-                  itemBuilder: (context, index) => CategoryFragment(),
-                ),
+                height: MediaQuery.of(context).size.height * 0.2,
+                child: HomeScreenView(),
+              ),
+              SizedBox(height: 8),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      'Brands',
+                      style: Theme.of(context).textTheme.titleSmall,
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      'view all',
+                      style: Theme.of(context).textTheme.titleSmall,
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: MediaQuery.of(context).size.height * 0.2,
+                child: BrandsView(),
               ),
             ],
           ),
@@ -65,3 +110,4 @@ class HomeScreen extends StatelessWidget {
     );
   }
 }
+
