@@ -2,7 +2,10 @@ import 'dart:convert';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:e_commerce_app/data/model/Request/LogInRequest.dart';
+import 'package:e_commerce_app/data/model/Response/GetallCategory/BrandSourceResponse.dart';
+import 'package:e_commerce_app/data/model/Response/GetallCategory/CategoryResponse.dart';
 import 'package:e_commerce_app/data/model/Response/LoginResponse/LoginResponse.dart';
+
 import 'package:http/http.dart' as http;
 
 import '../model/Request/RequestRegisterScreen.dart';
@@ -11,19 +14,19 @@ import 'api_const.dart';
 
 class ApiManger {
   ApiManger._();
+
   static ApiManger? _instance;
+
   static ApiManger getApiInstance() {
     _instance ??= ApiManger._();
     return _instance!;
   }
 
-  Future<RegisterResponse?> register(
-    String name,
-    String email,
-    String password,
-    String rePassword,
-    String phone,
-  ) async {
+  Future<RegisterResponse?> register(String name,
+      String email,
+      String password,
+      String rePassword,
+      String phone,) async {
     final connectivityResult = await Connectivity().checkConnectivity();
 
     if (connectivityResult == ConnectivityResult.mobile ||
@@ -41,7 +44,7 @@ class ApiManger {
       var response = await http.post(url, body: requestBody.toJson());
 
       var registerResponse =
-          RegisterResponse.fromJson(json.decode(response.body));
+      RegisterResponse.fromJson(json.decode(response.body));
 
       if (response.statusCode >= 200 && response.statusCode < 300) {
         return registerResponse;
@@ -80,4 +83,83 @@ class ApiManger {
       return LoginResponse(message: 'Please check internet connection');
     }
   }
+
+  Future<CategoryResponse?> getAllCategory() async {
+    final connectivityResult = await Connectivity().checkConnectivity();
+    if (connectivityResult == ConnectivityResult.mobile ||
+        connectivityResult == ConnectivityResult.wifi) {
+      Uri url = Uri.https(ApiConst.baseUrl, ApiConst.categoryUrl);
+      var response = await http.get(url);
+      var bodyString = response.body;
+      var json = jsonDecode(bodyString);
+      return CategoryResponse.fromJson(json);
+    } else {
+      print('No internet connection');
+      return null;
+    }
+  }
+
+
+  Future<BrandSourceResponse?> getAllBrands() async {
+    /*
+https://ecommerce.routemisr.com/api/v1/brands
+     */
+    final connectivityResult = await Connectivity().checkConnectivity();
+    if (connectivityResult == ConnectivityResult.mobile ||
+        connectivityResult == ConnectivityResult.wifi) {
+      Uri url = Uri.http(ApiConst.baseUrl, ApiConst.brandsUrl);
+      var response = await http.get(url);
+      var bodyString = response.body;
+      var json = jsonDecode(bodyString);
+      return BrandSourceResponse.fromJson(json);
+    } else {
+      print('No internet connection');
+      return null;
+    }
+  }
+
+Future<BrandSourceResponse?> searchBrand(String id)async{
+/*
+https://ecommerce.routemisr.com/api/v1/brands/64089ceb24b25627a2531596
+ */
+  final connectivityResult = await Connectivity().checkConnectivity();
+  if (connectivityResult == ConnectivityResult.mobile ||
+      connectivityResult == ConnectivityResult.wifi) {
+    Uri url = Uri.https(
+      ApiConst.baseUrl,
+      '${ApiConst.SearchBrandsUrl}/$id',
+    );
+
+
+
+
+
+    var response=await http.get(url);
+    var bodyString=response.body;
+    var json=jsonDecode(bodyString);
+    return BrandSourceResponse.fromJson(json);
+  }else {
+    print('No internet connection');
+    return null;
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}
+
+
 }
