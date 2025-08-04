@@ -5,7 +5,7 @@ import 'BasicElement/basic_element.dart';
 import 'CategoryFragment/category_fragment.dart';
 
 class HomeScreen extends StatelessWidget {
-  final searchcontroller = TextEditingController();
+  var searchcontroller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
