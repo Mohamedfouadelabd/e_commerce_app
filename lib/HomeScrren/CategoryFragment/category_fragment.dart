@@ -18,17 +18,8 @@ Column(
       padding: const EdgeInsets.all(8.0),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(20),
-        child:CachedNetworkImage(
-          height: MediaQuery.of(context).size.height * 0.1,
-          width: MediaQuery.of(context).size.width * 0.2,
-          fit: BoxFit.cover,
-          imageUrl: data.image??"",
-          placeholder: (context, url) => CircularProgressIndicator(
-            color: MyTheme.primary,
+        child:Image.network(data.image??"",)
 
-          ),
-          errorWidget: (context, url, error) => Icon(Icons.error),
-        ),
       ),
     ),
 
@@ -57,10 +48,19 @@ Column(
 }
 /*
 
- Image.asset(
-          'assets/images/category.png',
 
+
+ */
+/*
+CachedNetworkImage(
+          height: MediaQuery.of(context).size.height * 0.1,
+          width: MediaQuery.of(context).size.width * 0.2,
+          fit: BoxFit.cover,
+          imageUrl: data.image??"",
+          placeholder: (context, url) => CircularProgressIndicator(
+            color: MyTheme.primary,
+
+          ),
+          errorWidget: (context, url, error) => Icon(Icons.error),
         ),
-
-
  */

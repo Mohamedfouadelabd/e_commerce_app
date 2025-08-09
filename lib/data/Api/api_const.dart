@@ -8,7 +8,7 @@ class ApiConst{
 
 
   static const String SearchBrandsUrl='api/v1/brands/64089ceb24b25627a2531596';
-
+  static const String productUrl='api/v1/products';
 }
 
 
