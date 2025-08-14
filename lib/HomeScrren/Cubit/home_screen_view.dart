@@ -15,11 +15,31 @@ class HomeScreenView extends StatefulWidget {
 
 class _HomeScreenViewState extends State<HomeScreenView> {
   HomeScreenViewModel viewModel =
-      HomeScreenViewModel(injectGetCategoryUseCase());
+  HomeScreenViewModel(injectGetCategoryUseCase());
+  final ScrollController scrollController = ScrollController();
+
+  int currentPage = 1;
+  bool isLoadingMore = false;
+
   @override
   void initState() {
     // TODO: implement initState
     viewModel.getCategory();
+    scrollController.addListener(() {
+      final position = scrollController.position;
+      if (position.pixels >= position.maxScrollExtent - 200 &&
+          !isLoadingMore &&
+          viewModel.canLoadMore(currentPage)) {
+        loadMore();
+      }
+    });
+  }
+
+  Future<void> loadMore() async {
+    setState(() => isLoadingMore = true);
+    currentPage++;
+    viewModel.getCategory(page: currentPage);
+    setState(() => isLoadingMore = false);
   }
 
   @override
@@ -30,8 +50,8 @@ class _HomeScreenViewState extends State<HomeScreenView> {
         if (state is HomeScreenLoadingState) {
           return Center(
               child: CircularProgressIndicator(
-            color: MyTheme.primary,
-          ));
+                color: MyTheme.primary,
+              ));
         } else if (state is HomeScreenErrorState) {
           return Column(
             children: [
@@ -42,6 +62,7 @@ class _HomeScreenViewState extends State<HomeScreenView> {
         } else if (state is HomeScreenSuccessState) {
           var datalist = state.response?.data ?? [];
           return ListView.builder(
+            controller: scrollController,
             scrollDirection: Axis.horizontal,
             itemCount: datalist.length,
             itemBuilder: (context, index) {
@@ -53,5 +74,11 @@ class _HomeScreenViewState extends State<HomeScreenView> {
         return Container();
       },
     );
+  }
+
+  @override
+  void dispose() {
+    scrollController.dispose();
+    super.dispose();
   }
 }

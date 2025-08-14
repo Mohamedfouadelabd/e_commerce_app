@@ -16,10 +16,28 @@ class ProductView extends StatefulWidget {
 
 class _ProductViewState extends State<ProductView> {
   ProductViewModel viewModel = ProductViewModel(injectProductUseCase());
-@override
+  final ScrollController scrollController = ScrollController();
+
+  int currentPage = 1;
+  bool isLoadingMore = false;
+  @override
   void initState() {
     // TODO: implement initState
-    viewModel.getAllProduct();
+    viewModel.getAllProduct(page: currentPage);
+    scrollController.addListener(() {
+      final position = scrollController.position;
+      if (position.pixels >= position.maxScrollExtent - 200 &&
+          !isLoadingMore &&
+          viewModel.canLoadMore(currentPage)) {
+        loadMore();
+      }
+    });
+  }
+  Future<void> loadMore() async {
+    setState(() => isLoadingMore = true);
+    currentPage++;
+    viewModel.getAllProduct(page: currentPage);
+    setState(() => isLoadingMore = false);
   }
   @override
   Widget build(BuildContext context) {
@@ -30,15 +48,12 @@ class _ProductViewState extends State<ProductView> {
             return Center(
                 child: CircularProgressIndicator(color: MyTheme.primary,));
           } else if (state is ProductErrorState) {
-            return Column(
-              children: [
-                Text(state.errorMassage ?? ""),
-                ElevatedButton(onPressed: () {}, child: Text('TryAgain')),
-              ],
-            );
+
+
           } else if (state is ProductSuccessState) {
             var productList = state.response?.data ?? [];
             return GridView.builder(
+                controller: scrollController,
                 itemCount: productList.length,
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
@@ -57,4 +72,10 @@ class _ProductViewState extends State<ProductView> {
         }
     );
   }
+  @override
+  void dispose() {
+    scrollController.dispose();
+    super.dispose();
+  }
+
 }

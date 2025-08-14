@@ -7,8 +7,8 @@ class ProductImpl implements ProductContract{
 ProductRemoteDataSource remoteDataSource;
 ProductImpl({required this.remoteDataSource});
   @override
-  Future<ProductSourceResponse?> getAllProduct() {
-   return remoteDataSource.getAllProduct();
+  Future<ProductSourceResponse?> getAllProduct({int page = 1,}) {
+   return remoteDataSource.getAllProduct(page: page);
   }
 
 

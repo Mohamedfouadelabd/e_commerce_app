@@ -8,9 +8,9 @@ class GetCategoryUseCase{
   HomeScreenCategoryContract screenCategoryContract;
   GetCategoryUseCase({required this.screenCategoryContract});
 
-Future <CategoryResponse?>invoke(){
+Future <CategoryResponse?>invoke({int page = 1,}){
 
-  return screenCategoryContract.getAllCategory();
+  return screenCategoryContract.getAllCategory(page: page);
 }
 
 

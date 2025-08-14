@@ -8,8 +8,8 @@ class HomeScreenCategoryImpl implements HomeScreenCategoryContract{
   CategoryRemoteDataSource remoteDataSource;
   HomeScreenCategoryImpl({required this.remoteDataSource});
   @override
-  Future<CategoryResponse?> getAllCategory() {
- return remoteDataSource.getAllCategory();
+  Future<CategoryResponse?> getAllCategory({int page = 1,}) {
+ return remoteDataSource.getAllCategory(page: page);
   }
 
 

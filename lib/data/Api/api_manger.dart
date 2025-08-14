@@ -1,14 +1,11 @@
 import 'dart:convert';
-
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:e_commerce_app/data/model/Request/LogInRequest.dart';
 import 'package:e_commerce_app/data/model/Response/GetallCategory/BrandSourceResponse.dart';
 import 'package:e_commerce_app/data/model/Response/GetallCategory/CategoryResponse.dart';
 import 'package:e_commerce_app/data/model/Response/LoginResponse/LoginResponse.dart';
 import 'package:e_commerce_app/data/model/Response/ProductResponse/ProductSourceResponse.dart';
-
 import 'package:http/http.dart' as http;
-
 import '../model/Request/RequestRegisterScreen.dart';
 import '../model/Response/RegisterResponse/RegisterResponse.dart';
 import 'api_const.dart';
@@ -87,7 +84,7 @@ class ApiManger {
     }
   }
 
-  Future<CategoryResponse?> getAllCategory() async {
+  Future<CategoryResponse?> getAllCategory({int page = 1,}) async {
     final connectivityResult = await Connectivity().checkConnectivity();
     if (connectivityResult == ConnectivityResult.mobile ||
         connectivityResult == ConnectivityResult.wifi) {
@@ -102,14 +99,17 @@ class ApiManger {
     }
   }
 
-  Future<BrandSourceResponse?> getAllBrands() async {
+  Future<BrandSourceResponse?> getAllBrands({int page = 1,}) async {
     /*
 https://ecommerce.routemisr.com/api/v1/brands
      */
     final connectivityResult = await Connectivity().checkConnectivity();
     if (connectivityResult == ConnectivityResult.mobile ||
         connectivityResult == ConnectivityResult.wifi) {
-      Uri url = Uri.http(ApiConst.baseUrl, ApiConst.brandsUrl);
+      Uri url = Uri.http(ApiConst.baseUrl, ApiConst.brandsUrl,{
+        'page':page.toString()
+
+      });
       var response = await http.get(url);
       var bodyString = response.body;
       var json = jsonDecode(bodyString);
@@ -144,11 +144,13 @@ https://ecommerce.routemisr.com/api/v1/brands
     }
   }
 
-  Future<ProductSourceResponse?> getAllProduct() async {
+  Future<ProductSourceResponse?> getAllProduct({int page = 1,}) async {
     /*
  https://ecommerce.routemisr.com/api/v1/products
   */
-    Uri url = Uri.https(ApiConst.baseUrl, ApiConst.productUrl);
+    Uri url = Uri.https(ApiConst.baseUrl, ApiConst.productUrl,{
+      'page':page.toString()
+    });
     var response = await http.get(url);
     var bodyString = response.body;
     var json = jsonDecode(bodyString);
@@ -171,8 +173,8 @@ https://ecommerce.routemisr.com/api/v1/brands
       var fullResponse = ProductSourceResponse.fromJson(json);
       fullResponse.data = fullResponse.data
           ?.where((product) =>
-      product.title?.toLowerCase().contains(title.toLowerCase()) ??
-          false)
+              product.title?.toLowerCase().contains(title.toLowerCase()) ??
+              false)
           .toList();
 
       return fullResponse;
@@ -180,10 +182,5 @@ https://ecommerce.routemisr.com/api/v1/brands
       print('No internet connection');
       return null;
     }
-
-
-
   }
-
-
 }

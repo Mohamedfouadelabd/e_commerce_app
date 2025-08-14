@@ -2,5 +2,5 @@ import 'package:e_commerce_app/data/model/Response/GetallCategory/CategoryRespon
 
 abstract class HomeScreenCategoryContract{
 
-   Future<CategoryResponse?>getAllCategory();
+   Future<CategoryResponse?>getAllCategory({int page = 1,});
 }

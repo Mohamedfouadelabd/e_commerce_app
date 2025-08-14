@@ -6,8 +6,8 @@ class BrandsUseCase{
  BrandsContract brandsContract;
  BrandsUseCase({required this.brandsContract});
 
-Future <BrandSourceResponse?>invoke(){
-  return brandsContract.getAllBrands();
+Future <BrandSourceResponse?>invoke({int page = 1}){
+  return brandsContract.getAllBrands(page: page);
 
 }
 }

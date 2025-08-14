@@ -6,11 +6,14 @@ import 'package:e_commerce_app/Main_screen/Main_screen.dart';
 import 'package:e_commerce_app/Personal/provider/user_provider.dart';
 import 'package:e_commerce_app/Splachscreen/splach_screen.dart';
 import 'package:e_commerce_app/Theme/my_Theme.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
-void main() {
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp( ChangeNotifierProvider(
       create: (context) => UserProvider(),
 
@@ -29,7 +32,7 @@ class MyApp extends StatelessWidget {
         return MaterialApp(
 debugShowCheckedModeBanner: false,
           theme: MyTheme.lightTheme,
-          initialRoute: MainScreen.routeName,
+          initialRoute:SplachScreen.routeName,
           routes: {
   SplachScreen.routeName:(context) => SplachScreen(),
             RegisterScreen.routeName:(context) => RegisterScreen(),

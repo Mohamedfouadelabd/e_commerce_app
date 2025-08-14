@@ -7,8 +7,8 @@ class BrandsRemoteDataSourceImpl implements BrandsRemoteDataSource{
   ApiManger apiManger;
   BrandsRemoteDataSourceImpl({required this.apiManger});
   @override
-  Future<BrandSourceResponse?> getAllBrands()async {
-  var response=await apiManger.getAllBrands();
+  Future<BrandSourceResponse?> getAllBrands({int page = 1})async {
+  var response=await apiManger.getAllBrands(page: page);
  return response;
   }
 
