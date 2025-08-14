@@ -6,8 +6,8 @@ class ProductRemoteDataSourceImpl implements ProductRemoteDataSource{
  ApiManger apiManger;
  ProductRemoteDataSourceImpl({required this.apiManger}) ;
  @override
-  Future<ProductSourceResponse?> getAllProduct()async {
-    var response=await apiManger.getAllProduct();
+  Future<ProductSourceResponse?> getAllProduct({int page = 1,})async {
+    var response=await apiManger.getAllProduct(page: page);
 return response;
  }
 

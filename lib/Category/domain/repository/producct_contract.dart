@@ -2,5 +2,5 @@ import 'package:e_commerce_app/data/model/Response/ProductResponse/ProductSource
 
 abstract class ProductContract{
 
-Future<ProductSourceResponse?>  getAllProduct();
+Future<ProductSourceResponse?>  getAllProduct({int page = 1,});
 }

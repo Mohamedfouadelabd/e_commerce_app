@@ -15,11 +15,30 @@ class BrandsView extends StatefulWidget {
 
 class _BrandsViewState extends State<BrandsView> {
 BrandsViewModel viewModel=BrandsViewModel(injectBrandsUseCase());
+final ScrollController scrollController = ScrollController();
+
+int currentPage = 1;
+bool isLoadingMore = false;
 @override
   void initState() {
     // TODO: implement initState
-    viewModel.getAllBrands();
-  }
+    viewModel.getAllBrands(page: currentPage);
+    scrollController.addListener(() {
+      final position = scrollController.position;
+      if (position.pixels >= position.maxScrollExtent - 200 &&
+          !isLoadingMore &&
+          viewModel.canLoadMore(currentPage)) {
+        loadMore();
+      }
+    });
+
+}
+Future<void> loadMore() async {
+  setState(() => isLoadingMore = true);
+  currentPage++;
+  viewModel.getAllBrands(page: currentPage);
+  setState(() => isLoadingMore = false);
+}
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<BrandsViewModel,BrandeState>(
@@ -42,7 +61,8 @@ BrandsViewModel viewModel=BrandsViewModel(injectBrandsUseCase());
       }else if(state is BrandeSuccessState){
         var brandsList=state.response?.data??[];
         return ListView.builder(
-scrollDirection:Axis.horizontal,
+controller: scrollController,
+          scrollDirection:Axis.horizontal,
           itemCount: brandsList.length,
 
           itemBuilder: (context, index) {
@@ -55,4 +75,10 @@ scrollDirection:Axis.horizontal,
     return Container();
       },);
   }
+
+@override
+void dispose() {
+  scrollController.dispose();
+  super.dispose();
+}
 }

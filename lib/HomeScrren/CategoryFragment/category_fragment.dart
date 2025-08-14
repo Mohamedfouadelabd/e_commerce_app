@@ -18,7 +18,10 @@ Column(
       padding: const EdgeInsets.all(8.0),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(20),
-        child:Image.network(data.image??"",)
+        child:Image.network(data.image??"",
+        height: 2,
+
+        )
 
       ),
     ),

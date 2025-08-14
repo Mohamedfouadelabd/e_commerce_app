@@ -8,8 +8,8 @@ class BrandsImpl implements BrandsContract{
   BrandsRemoteDataSource remoteDataSource ;
   BrandsImpl({required this.remoteDataSource});
   @override
-  Future<BrandSourceResponse?> getAllBrands() {
-return remoteDataSource.getAllBrands();
+  Future<BrandSourceResponse?> getAllBrands({int page = 1}) {
+return remoteDataSource.getAllBrands(page: page);
   }
 
 }

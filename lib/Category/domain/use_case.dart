@@ -7,8 +7,8 @@ class ProductUseCase{
   ProductUseCase({required this.productContract});
 
 
-  Future<ProductSourceResponse?>invoke(){
-  return productContract.getAllProduct();
+  Future<ProductSourceResponse?>invoke({int page = 1,}){
+  return productContract.getAllProduct(page: page);
 }
 
 

@@ -7,8 +7,8 @@ class CategoryRemoteDataSourceImpl implements CategoryRemoteDataSource{
  ApiManger apiManger;
  CategoryRemoteDataSourceImpl({required this.apiManger});
  @override
-  Future<CategoryResponse?> getAllCategory()async {
-   var response=await apiManger.getAllCategory();
+  Future<CategoryResponse?> getAllCategory({int page = 1,})async {
+   var response=await apiManger.getAllCategory(page: page);
 return response;
   }
 
